@@ -3,6 +3,7 @@
 #include "RestrictedPlanet.h"
 #include "core/physics/RK45Integrator.h"
 #include "core/physics/RK4Integrator.h"
+#include "renderer/common/FramePacing.h"
 #include <algorithm>
 #include <chrono>
 #include <cmath>
@@ -564,7 +565,7 @@ void Simulator::worker(ThreeBodyState<double>,
         awaitDisplay();
       } else if(generated) {
         // Present N-0.5 before N, paced apart; never feed generated pixels to physics.
-        const auto realDeadline = Clock::now() + std::chrono::nanoseconds(1000000000LL / config.targetFps);
+        const auto realDeadline = Clock::now() + framePacingInterval(config.targetFps);
         std::unique_lock<std::mutex> l(mutex_);
         wake_.wait_until(l, realDeadline, [&]{return terminate_ || !running_;});
       }
@@ -575,7 +576,7 @@ void Simulator::worker(ThreeBodyState<double>,
       wasRunning = running_;
       first = false;
       std::unique_lock<std::mutex> l(mutex_);
-      if(!config.waitForDisplayTick) wake_.wait_until(l, begin + std::chrono::nanoseconds((backend->frameGenerationActive() ? 2000000000LL : 1000000000LL) / config.targetFps),
+      if(!config.waitForDisplayTick) wake_.wait_until(l, begin + framePacingInterval(config.targetFps, backend->frameGenerationActive()),
                        [&] { return terminate_ || !running_; });
     }
   } catch (const std::exception &e) {

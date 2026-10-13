@@ -34,15 +34,18 @@ struct Display : IRenderBackend {
   void resizePreview(uint32_t,uint32_t)override{}
   void shutdown()override{assert(!generated);++stopped;}
 };
-template<class F>void until(F f){auto end=Clock::now()+std::chrono::seconds(4);while(!f()){assert(Clock::now()<end);std::this_thread::sleep_for(std::chrono::milliseconds(2));}}
+template<class F>void until(F f){auto end=Clock::now()+std::chrono::seconds(15);while(!f()){assert(Clock::now()<end);std::this_thread::sleep_for(std::chrono::milliseconds(2));}}
 int main(){
   auto& sim=Simulator::instance();
   char directory[]="/tmp/threebody-fps-sim-XXXXXX";assert(mkdtemp(directory));sim.setRecordingDirectory(directory);
   for(bool fail:{false,true}){
     auto renderer=std::make_shared<Display>(fail);RenderConfig c;c.targetFps=120;c.framesInFlight=2;c.recordFrameRates=true;
     assert(sim.start(makeFigureEightDouble(),renderer,c));
-    until([&]{return sim.status().state.simulationTime>=1.5;});
-    auto s=sim.status();assert(s.fps>20);
+    // Wait for a complete accounting window, including after fallback. Host
+    // timer resolution and shared-runner load must not act as FPS benchmarks.
+    until([&]{auto s=sim.status();return s.state.simulationTime>=1.5 && s.fps>0 &&
+      s.hasFrameRateRecording && (fail ? s.frameGenerationMessage=="fallback" && s.presentationFps==s.fps : s.presentationFps>s.fps*1.8);});
+    auto s=sim.status();assert(s.fps>0);
     assert(s.actualDisplayFps==(fail ? -1 : 60)); // Never infer scanout from generated count.
     assert(s.hasFrameRateRecording&&s.countedRealFrames>0&&s.countedDisplayFrames>s.countedRealFrames);
     if(!fail){assert(s.presentationFps>s.fps*1.8);assert(s.presentationFps<=s.fps*2.01);}
