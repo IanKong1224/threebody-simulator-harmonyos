@@ -1,0 +1,16 @@
+{
+  "string": [
+    {
+      "name": "module_desc",
+      "value": "实时三体模拟"
+    },
+    {
+      "name": "EntryAbility_desc",
+      "value": "实时三体模拟"
+    },
+    {
+      "name": "EntryAbility_label",
+      "value": "三体模拟器Pro Max"
+    }
+  ]
+}

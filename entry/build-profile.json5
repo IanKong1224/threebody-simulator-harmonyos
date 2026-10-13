@@ -1,0 +1,15 @@
+{
+  "apiType": "stageMode",
+  "buildOption": {
+    "externalNativeOptions": {
+      "path": "./src/main/cpp/CMakeLists.txt",
+      "arguments": "-DTHREEBODY_PLANET=OFF -DTHREEBODY_BASIC=OFF -DTHREEBODY_PARTICLES=OFF -DTHREEBODY_DETAILED=ON -DTHREEBODY_ACCELERATED=ON",
+      "cppFlags": ""
+    }
+  },
+  "targets": [
+    {
+      "name": "default"
+    }
+  ]
+}

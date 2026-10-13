@@ -1,0 +1,11 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "Real-time three-body simulator for HarmonyOS",
+  "main": "",
+  "author": "@差评硬件部",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "libentry.so": "file:./src/main/cpp/types/libentry"
+  }
+}

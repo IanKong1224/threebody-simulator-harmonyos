@@ -1,0 +1,9 @@
+{
+  "modelVersion": "5.0.0",
+  "description": "Real-time three-body simulator for HarmonyOS",
+  "dependencies": {},
+  "devDependencies": {},
+  "license": "Apache-2.0",
+  "author": "@差评硬件部",
+  "version": "1.0.0"
+}
