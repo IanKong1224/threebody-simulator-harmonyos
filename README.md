@@ -1,5 +1,7 @@
 # 三体模拟器 · HarmonyOS
 
+[![Source checks](https://github.com/IanKong1224/threebody-simulator-harmonyos/actions/workflows/ci.yml/badge.svg)](https://github.com/IanKong1224/threebody-simulator-harmonyos/actions/workflows/ci.yml)
+
 三颗恒星的运动由手机实时计算，轨迹来自历史计算结果。支持全屏观察、预设与自定义初始状态，并逐步增加粒子、恒星表面、光晕和可选渲染加速。
 
 **署名：@差评硬件部 · 个人开源发布：IanKong1224 · 许可证：[Apache-2.0](LICENSE)**
@@ -79,7 +81,7 @@ Release 测试仍启用断言。主机测试不能替代真机显示、签名和
 - [焚决：给 Codex 的开发提示词](prompts/焚决.md)：从零开发的阶段要求，不保证一次对话生成完整产品。
 - [开发路线](docs/DEVELOPMENT.md)：每个阶段解决什么问题、怎样验证。
 - [架构](ARCHITECTURE.md)：物理、渲染、界面与厂商接入的边界。
-- [第三方与来源](THIRD_PARTY_NOTICES.md)：依赖、科学参考及尚待确认的来源。
+- [第三方与来源](THIRD_PARTY_NOTICES.md)：依赖、科学参考及许可边界。
 - [贡献指南](CONTRIBUTING.md)、[问题反馈](.github/ISSUE_TEMPLATE/bug_report.md)。
 
-首个公开版本将是当前源码快照；没有伪造过去开发阶段的 Git 提交历史。
+首个公开版本是当前源码快照；没有伪造过去开发阶段的 Git 提交历史。
